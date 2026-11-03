@@ -1,0 +1,1225 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090d18">
+  <title>FF GUILD HUB</title>
+
+  <style>
+    :root {
+      --bg: #090d18;
+      --panel: #121a2b;
+      --panel2: #19243a;
+      --text: #f4f7ff;
+      --muted: #9ba9c2;
+      --primary: #ff9d00;
+      --primary2: #ff5e00;
+      --green: #23d18b;
+      --red: #ff5b65;
+      --border: #293650;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+    }
+
+    button, input, textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .navbar {
+      background: #101727;
+      border-bottom: 1px solid var(--border);
+      padding: 16px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      color: var(--primary);
+      font-size: 23px;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .container {
+      width: min(1100px, 92%);
+      margin: 30px auto;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 45px 15px;
+      background: linear-gradient(135deg, #1a2945, #111827);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      margin-bottom: 25px;
+    }
+
+    .hero h1 {
+      font-size: clamp(30px, 6vw, 48px);
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin: 20px 0 30px;
+    }
+
+    .stat {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 20px 10px;
+      text-align: center;
+      border-radius: 12px;
+    }
+
+    .stat strong {
+      display: block;
+      color: var(--primary);
+      font-size: 28px;
+      margin-bottom: 7px;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .section-heading h2 {
+      font-size: 22px;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    input, textarea {
+      width: 100%;
+      background: #0d1422;
+      color: white;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 12px;
+      outline: none;
+    }
+
+    input:focus, textarea:focus {
+      border-color: var(--primary);
+    }
+
+    .search {
+      flex: 1;
+      min-width: 180px;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 9px;
+      padding: 11px 16px;
+      background: var(--primary);
+      color: #17100a;
+      font-weight: bold;
+      transition: .2s;
+    }
+
+    .btn:hover {
+      filter: brightness(1.12);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: var(--panel2);
+      border: 1px solid var(--border);
+      color: white;
+    }
+
+    .btn-danger {
+      background: var(--red);
+      color: #200509;
+    }
+
+    .btn-success {
+      background: var(--green);
+      color: #062317;
+    }
+
+    .guild-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .guild-card, .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      padding: 18px;
+    }
+
+    .guild-card h3 {
+      color: var(--primary);
+      font-size: 20px;
+      margin-bottom: 14px;
+      overflow-wrap: anywhere;
+    }
+
+    .guild-info {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.9;
+      margin-bottom: 15px;
+      overflow-wrap: anywhere;
+    }
+
+    .guild-info b {
+      color: var(--text);
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .empty {
+      grid-column: 1 / -1;
+      padding: 35px 15px;
+      text-align: center;
+      border: 1px dashed var(--border);
+      border-radius: 12px;
+      color: var(--muted);
+    }
+
+    .panel {
+      margin-top: 28px;
+    }
+
+    .panel h2 {
+      margin-bottom: 17px;
+      color: var(--primary);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .form-grid .full {
+      grid-column: 1 / -1;
+    }
+
+    .field label {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 7px;
+    }
+
+    .field textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .request-card {
+      background: #0d1422;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 10px;
+    }
+
+    .request-card p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+      margin: 8px 0;
+      overflow-wrap: anywhere;
+    }
+
+    .status {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 5px 9px;
+      border-radius: 20px;
+      background: #4a3a16;
+      color: #ffd16b;
+    }
+
+    .status.accepted {
+      background: #123d2d;
+      color: #55e7a8;
+    }
+
+    .status.rejected {
+      background: #481d26;
+      color: #ff8c97;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: #000b;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+      z-index: 10;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-box {
+      width: min(430px, 100%);
+      max-height: 90vh;
+      overflow-y: auto;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      padding: 23px;
+    }
+
+    .modal-box h2 {
+      color: var(--primary);
+      margin-bottom: 18px;
+    }
+
+    .modal-box .field {
+      margin-bottom: 13px;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 15px;
+    }
+
+    .close {
+      float: right;
+      color: var(--muted);
+      background: none;
+      border: none;
+      font-size: 25px;
+    }
+
+    .message {
+      margin-top: 12px;
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+
+    .footer {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--muted);
+      padding: 25px 10px;
+      margin-top: 45px;
+      font-size: 13px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 600px) {
+      .stats {
+        gap: 8px;
+      }
+
+      .stat {
+        padding: 15px 5px;
+      }
+
+      .stat strong {
+        font-size: 23px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-grid .full {
+        grid-column: auto;
+      }
+
+      .navbar {
+        padding: 14px 4%;
+      }
+
+      .logo {
+        font-size: 19px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="navbar">
+    <div class="logo">🔥 FF GUILD HUB</div>
+
+    <div class="nav-actions">
+      <span id="userLabel" class="hidden"></span>
+      <button class="btn" id="authButton">Login / Signup</button>
+      <button class="btn btn-secondary hidden" id="logoutButton">Logout</button>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <section class="hero">
+      <h1>FIND YOUR GUILD</h1>
+      <p>Discover Free Fire guilds, connect with leaders and send join requests.</p>
+    </section>
+
+    <section class="stats">
+      <div class="stat">
+        <strong id="guildCount">0</strong>
+        <span>Total Guilds</span>
+      </div>
+
+      <div class="stat">
+        <strong id="playerCount">0</strong>
+        <span>Total Players</span>
+      </div>
+
+      <div class="stat">
+        <strong id="requestCount">0</strong>
+        <span>My Requests</span>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-heading">
+        <h2>🏆 Available Guilds</h2>
+        <button class="btn" id="registerButton">+ Register Guild</button>
+      </div>
+
+      <div class="toolbar">
+        <input
+          type="search"
+          class="search"
+          id="searchInput"
+          placeholder="Search guild name, ID or leader..."
+        >
+      </div>
+
+      <div class="guild-grid" id="guildList">
+        <div class="empty">Loading guilds...</div>
+      </div>
+    </section>
+
+    <section class="panel hidden" id="myRequestsPanel">
+      <h2>📨 My Join Requests</h2>
+      <div id="myRequestsList"></div>
+    </section>
+
+    <section class="panel hidden" id="leaderPanel">
+      <h2>👑 Guild Join Requests</h2>
+      <div id="leaderRequestsList"></div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    FF GUILD HUB · Community Guild Directory
+  </footer>
+
+  <!-- Authentication Modal -->
+  <div class="modal" id="authModal">
+    <div class="modal-box">
+      <button class="close" data-close="authModal">×</button>
+      <h2 id="authTitle">Login</h2>
+
+      <div class="field hidden" id="nameField">
+        <label>Gaming Name</label>
+        <input id="authName" maxlength="30" placeholder="Enter gaming name">
+      </div>
+
+      <div class="field">
+        <label>Email</label>
+        <input id="authEmail" type="email" autocomplete="email" placeholder="Enter email">
+      </div>
+
+      <div class="field">
+        <label>Password</label>
+        <input id="authPassword" type="password" autocomplete="current-password" placeholder="Enter password">
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn" id="authSubmit">Login</button>
+        <button class="btn btn-secondary" id="switchAuth">Create Account</button>
+      </div>
+
+      <p class="message" id="authMessage"></p>
+      <button class="btn btn-secondary" id="forgotPassword" style="margin-top:12px;width:100%">
+        Forgot Password?
+      </button>
+    </div>
+  </div>
+
+  <!-- Guild Registration Modal -->
+  <div class="modal" id="guildModal">
+    <div class="modal-box">
+      <button class="close" data-close="guildModal">×</button>
+      <h2>Register Your Guild</h2>
+
+      <div class="field">
+        <label>Guild Name</label>
+        <input id="guildName" maxlength="35" placeholder="Enter guild name">
+      </div>
+
+      <div class="field">
+        <label>Free Fire Guild ID</label>
+        <input id="guildGameId" maxlength="30" placeholder="Enter guild ID">
+      </div>
+
+      <div class="field">
+        <label>Leader Name</label>
+        <input id="leaderName" maxlength="30" placeholder="Enter leader gaming name">
+      </div>
+
+      <div class="field">
+        <label>Leader UID</label>
+        <input id="leaderUid" maxlength="30" placeholder="Enter leader UID">
+      </div>
+
+      <div class="field">
+        <label>Maximum Players</label>
+        <input id="maxPlayers" type="number" min="1" max="55" value="50">
+      </div>
+
+      <div class="field">
+        <label>Current Players</label>
+        <input id="totalPlayers" type="number" min="1" max="55" value="1">
+      </div>
+
+      <div class="field">
+        <label>Guild Description (Optional)</label>
+        <textarea id="guildDescription" maxlength="250" placeholder="Tell players about your guild"></textarea>
+      </div>
+
+      <button class="btn" id="saveGuildButton" style="width:100%">
+        Register Guild
+      </button>
+
+      <p class="message" id="guildMessage"></p>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp }
+      from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
+    import {
+      getAuth,
+      createUserWithEmailAndPassword,
+      signInWithEmailAndPassword,
+      signOut,
+      onAuthStateChanged,
+      updateProfile,
+      sendPasswordResetEmail
+    } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+    import {
+      getFirestore,
+      collection,
+      addDoc,
+      getDocs,
+      query,
+      where,
+      onSnapshot,
+      doc,
+      updateDoc,
+      deleteDoc,
+      serverTimestamp,
+      runTransaction
+    } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+    // YOUR FIREBASE CONFIG
+    const firebaseConfig = {
+      apiKey: "AIzaSyDb8w5yq2SdDmH0ff89AnzBtisJz1HvYU4",
+      authDomain: "ff-guild-hub.firebaseapp.com",
+      projectId: "ff-guild-hub",
+      storageBucket: "ff-guild-hub.firebasestorage.app",
+      messagingSenderId: "433243101977",
+      appId: "1:433243101977:web:9e82c326644885c76e8388",
+      measurementId: "G-HR7XJP9KMW"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    let currentUser = null;
+    let guilds = [];
+    let myRequests = [];
+    let leaderRequests = [];
+    let authMode = "login";
+
+    let stopGuildListener = null;
+    let stopMyRequestsListener = null;
+    let stopLeaderRequestsListener = null;
+
+    const $ = id => document.getElementById(id);
+
+    function showMessage(id, message, isError = false) {
+      const element = $(id);
+      element.textContent = message;
+      element.style.color = isError ? "#ff777f" : "#23d18b";
+    }
+
+    function showModal(id) {
+      $(id).classList.add("show");
+    }
+
+    function hideModal(id) {
+      $(id).classList.remove("show");
+    }
+
+    function safeText(value) {
+      return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      })[char]);
+    }
+
+    function friendlyError(error) {
+      const messages = {
+        "auth/email-already-in-use": "This email is already registered.",
+        "auth/invalid-email": "Please enter a valid email.",
+        "auth/weak-password": "Password must contain at least 6 characters.",
+        "auth/invalid-credential": "Incorrect email or password.",
+        "auth/user-not-found": "Account not found.",
+        "auth/wrong-password": "Incorrect password.",
+        "permission-denied": "Permission denied. Please check Firestore Rules.",
+        "unavailable": "Network unavailable. Please try again."
+      };
+
+      return messages[error.code] || error.message || "Something went wrong.";
+    }
+
+    function setButtonLoading(button, loading, normalText) {
+      button.disabled = loading;
+      button.textContent = loading ? "Please wait..." : normalText;
+    }
+
+    function startGuildListener() {
+      if (stopGuildListener) stopGuildListener();
+
+      stopGuildListener = onSnapshot(
+        collection(db, "guilds"),
+        snapshot => {
+          guilds = snapshot.docs.map(item => ({
+            id: item.id,
+            ...item.data()
+          }));
+
+          renderGuilds();
+          updateStats();
+        },
+        error => {
+          console.error(error);
+          $("guildList").innerHTML =
+            `<div class="empty">Unable to load guilds: ${safeText(friendlyError(error))}</div>`;
+        }
+      );
+    }
+
+    function startUserListeners(user) {
+      if (stopMyRequestsListener) stopMyRequestsListener();
+      if (stopLeaderRequestsListener) stopLeaderRequestsListener();
+
+      const ownQuery = query(
+        collection(db, "joinRequests"),
+        where("requesterUid", "==", user.uid)
+      );
+
+      stopMyRequestsListener = onSnapshot(ownQuery, snapshot => {
+        myRequests = snapshot.docs.map(item => ({
+          id: item.id,
+          ...item.data()
+        }));
+
+        renderMyRequests();
+        updateStats();
+      }, error => console.error("My requests:", error));
+
+      const leaderQuery = query(
+        collection(db, "joinRequests"),
+        where("guildOwnerUid", "==", user.uid)
+      );
+
+      stopLeaderRequestsListener = onSnapshot(leaderQuery, snapshot => {
+        leaderRequests = snapshot.docs.map(item => ({
+          id: item.id,
+          ...item.data()
+        }));
+
+        renderLeaderRequests();
+      }, error => console.error("Leader requests:", error));
+    }
+
+    function stopUserListeners() {
+      if (stopMyRequestsListener) stopMyRequestsListener();
+      if (stopLeaderRequestsListener) stopLeaderRequestsListener();
+
+      stopMyRequestsListener = null;
+      stopLeaderRequestsListener = null;
+
+      myRequests = [];
+      leaderRequests = [];
+
+      renderMyRequests();
+      renderLeaderRequests();
+      updateStats();
+    }
+
+    function updateStats() {
+      $("guildCount").textContent = guilds.length;
+
+      $("playerCount").textContent = guilds.reduce(
+        (sum, guild) => sum + Number(guild.totalPlayers || 0),
+        0
+      );
+
+      $("requestCount").textContent = myRequests.length;
+    }
+
+    function renderGuilds() {
+      const search = $("searchInput").value.trim().toLowerCase();
+
+      const filtered = guilds.filter(guild => {
+        const content = [
+          guild.name,
+          guild.gameId,
+          guild.leaderName,
+          guild.leaderUid
+        ].join(" ").toLowerCase();
+
+        return content.includes(search);
+      });
+
+      if (!filtered.length) {
+        $("guildList").innerHTML = `
+          <div class="empty">
+            ${guilds.length ? "No matching guild found." : "No guilds registered yet. Be the first to register!"}
+          </div>
+        `;
+        return;
+      }
+
+      $("guildList").innerHTML = filtered.map(guild => {
+        const isOwner = currentUser && guild.ownerUid === currentUser.uid;
+        const full = Number(guild.totalPlayers) >= Number(guild.maxPlayers);
+
+        return `
+          <article class="guild-card">
+            <h3>🔥 ${safeText(guild.name)}</h3>
+
+            <div class="guild-info">
+              <div>Guild ID: <b>${safeText(guild.gameId)}</b></div>
+              <div>Leader: <b>${safeText(guild.leaderName)}</b></div>
+              <div>Leader UID: <b>${safeText(guild.leaderUid)}</b></div>
+              <div>Players: <b>${Number(guild.totalPlayers)}/${Number(guild.maxPlayers)}</b></div>
+              <div>Description: ${safeText(guild.description || "No description")}</div>
+            </div>
+
+            <div class="card-actions">
+              ${
+                isOwner
+                  ? `<button class="btn btn-secondary" disabled>Your Guild</button>
+                     <button class="btn btn-danger" data-delete="${safeText(guild.id)}">Delete</button>`
+                  : full
+                    ? `<button class="btn btn-secondary" disabled>Guild Full</button>`
+                    : `<button class="btn" data-join="${safeText(guild.id)}">Request to Join</button>`
+              }
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function renderMyRequests() {
+      $("myRequestsPanel").classList.toggle("hidden", !currentUser);
+
+      if (!myRequests.length) {
+        $("myRequestsList").innerHTML =
+          `<div class="empty">You haven't sent any join requests.</div>`;
+        return;
+      }
+
+      $("myRequestsList").innerHTML = myRequests.map(request => `
+        <div class="request-card">
+          <b>${safeText(request.guildName)}</b>
+          <p>Request status:
+            <span class="status ${safeText(request.status)}">
+              ${safeText(request.status)}
+            </span>
+          </p>
+        </div>
+      `).join("");
+    }
+
+    function renderLeaderRequests() {
+      const pending = leaderRequests.filter(request => request.status === "pending");
+
+      $("leaderPanel").classList.toggle(
+        "hidden",
+        !currentUser || leaderRequests.length === 0
+      );
+
+      if (!leaderRequests.length) {
+        $("leaderRequestsList").innerHTML =
+          `<div class="empty">No join requests received yet.</div>`;
+        return;
+      }
+
+      $("leaderRequestsList").innerHTML = leaderRequests.map(request => `
+        <div class="request-card">
+          <b>${safeText(request.guildName)}</b>
+          <p>
+            Player: ${safeText(request.requesterName)}<br>
+            Player UID: ${safeText(request.requesterUid)}<br>
+            Status: <span class="status ${safeText(request.status)}">${safeText(request.status)}</span>
+          </p>
+
+          ${
+            request.status === "pending"
+              ? `<div class="card-actions">
+                   <button class="btn btn-success" data-accept="${safeText(request.id)}">Accept</button>
+                   <button class="btn btn-danger" data-reject="${safeText(request.id)}">Reject</button>
+                 </div>`
+              : ""
+          }
+        </div>
+      `).join("");
+    }
+
+    function openAuth(mode = "login") {
+      authMode = mode;
+
+      $("authTitle").textContent = mode === "signup" ? "Create Account" : "Login";
+      $("authSubmit").textContent = mode === "signup" ? "Sign Up" : "Login";
+      $("switchAuth").textContent = mode === "signup" ? "Already have an account?" : "Create Account";
+      $("nameField").classList.toggle("hidden", mode !== "signup");
+      $("forgotPassword").classList.toggle("hidden", mode === "signup");
+
+      $("authPassword").value = "";
+      showMessage("authMessage", "");
+      showModal("authModal");
+    }
+
+    async function submitAuth() {
+      const button = $("authSubmit");
+      const email = $("authEmail").value.trim();
+      const password = $("authPassword").value;
+      const name = $("authName").value.trim();
+
+      if (!email || !password) {
+        showMessage("authMessage", "Enter email and password.", true);
+        return;
+      }
+
+      if (authMode === "signup" && !name) {
+        showMessage("authMessage", "Enter your gaming name.", true);
+        return;
+      }
+
+      setButtonLoading(button, true, authMode === "signup" ? "Sign Up" : "Login");
+
+      try {
+        if (authMode === "signup") {
+          const result = await createUserWithEmailAndPassword(
+            auth, email, password
+          );
+
+          await updateProfile(result.user, {
+            displayName: name
+          });
+        } else {
+          await signInWithEmailAndPassword(auth, email, password);
+        }
+
+        hideModal("authModal");
+      } catch (error) {
+        showMessage("authMessage", friendlyError(error), true);
+      } finally {
+        setButtonLoading(button, false, authMode === "signup" ? "Sign Up" : "Login");
+      }
+    }
+
+    async function logout() {
+      try {
+        await signOut(auth);
+      } catch (error) {
+        alert(friendlyError(error));
+      }
+    }
+
+    async function resetPassword() {
+      const email = $("authEmail").value.trim();
+
+      if (!email) {
+        showMessage("authMessage", "Enter your email first.", true);
+        return;
+      }
+
+      try {
+        await sendPasswordResetEmail(auth, email);
+        showMessage("authMessage", "Password reset email sent. Check your inbox.");
+      } catch (error) {
+        showMessage("authMessage", friendlyError(error), true);
+      }
+    }
+
+    function openGuildForm() {
+      if (!currentUser) {
+        openAuth("login");
+        showMessage("authMessage", "Please login before registering a guild.");
+        return;
+      }
+
+      $("guildMessage").textContent = "";
+      showModal("guildModal");
+    }
+
+    async function saveGuild() {
+      if (!currentUser) {
+        showMessage("guildMessage", "Please login first.", true);
+        return;
+      }
+
+      const button = $("saveGuildButton");
+
+      const name = $("guildName").value.trim();
+      const gameId = $("guildGameId").value.trim();
+      const leaderName = $("leaderName").value.trim();
+      const leaderUid = $("leaderUid").value.trim();
+      const maxPlayers = Number($("maxPlayers").value);
+      const totalPlayers = Number($("totalPlayers").value);
+      const description = $("guildDescription").value.trim();
+
+      if (!name || !gameId || !leaderName || !leaderUid) {
+        showMessage("guildMessage", "Please fill all required fields.", true);
+        return;
+      }
+
+      if (
+        !Number.isInteger(maxPlayers) ||
+        !Number.isInteger(totalPlayers) ||
+        maxPlayers < 1 ||
+        maxPlayers > 55 ||
+        totalPlayers < 1 ||
+        totalPlayers > maxPlayers
+      ) {
+        showMessage("guildMessage", "Check player limits. Maximum is 55.", true);
+        return;
+      }
+
+      setButtonLoading(button, true, "Register Guild");
+
+      try {
+        const duplicateQuery = query(
+          collection(db, "guilds"),
+          where("gameId", "==", gameId)
+        );
+
+        const duplicateSnapshot = await getDocs(duplicateQuery);
+
+        if (!duplicateSnapshot.empty) {
+          showMessage("guildMessage", "This Guild ID is already registered.", true);
+          return;
+        }
+
+        await addDoc(collection(db, "guilds"), {
+          name,
+          gameId,
+          leaderName,
+          leaderUid,
+          maxPlayers,
+          totalPlayers,
+          description,
+          ownerUid: currentUser.uid,
+          createdAt: serverTimestamp()
+        });
+
+        [
+          "guildName",
+          "guildGameId",
+          "leaderName",
+          "leaderUid",
+          "guildDescription"
+        ].forEach(id => $(id).value = "");
+
+        hideModal("guildModal");
+        alert("Guild registered successfully!");
+      } catch (error) {
+        showMessage("guildMessage", friendlyError(error), true);
+      } finally {
+        setButtonLoading(button, false, "Register Guild");
+      }
+    }
+
+    async function sendJoinRequest(guildId) {
+      if (!currentUser) {
+        openAuth("login");
+        showMessage("authMessage", "Login to send a join request.");
+        return;
+      }
+
+      try {
+        const guild = guilds.find(item => item.id === guildId);
+
+        if (!guild) {
+          alert("Guild not found.");
+          return;
+        }
+
+        if (guild.ownerUid === currentUser.uid) {
+          alert("You cannot request to join your own guild.");
+          return;
+        }
+
+        if (Number(guild.totalPlayers) >= Number(guild.maxPlayers)) {
+          alert("This guild is full.");
+          return;
+        }
+
+        const existingQuery = query(
+          collection(db, "joinRequests"),
+          where("requesterUid", "==", currentUser.uid),
+          where("guildId", "==", guildId)
+        );
+
+        const existing = await getDocs(existingQuery);
+
+        if (!existing.empty) {
+          alert("You have already sent a request to this guild.");
+          return;
+        }
+
+        await addDoc(collection(db, "joinRequests"), {
+          guildId,
+          guildName: guild.name,
+          guildOwnerUid: guild.ownerUid,
+          requesterUid: currentUser.uid,
+          requesterName: currentUser.displayName || "Player",
+          status: "pending",
+          createdAt: serverTimestamp()
+        });
+
+        alert("Join request sent successfully!");
+      } catch (error) {
+        alert(friendlyError(error));
+      }
+    }
+
+    async function changeRequestStatus(requestId, newStatus) {
+      if (!currentUser) return;
+
+      try {
+        const requestRef = doc(db, "joinRequests", requestId);
+        const request = leaderRequests.find(item => item.id === requestId);
+
+        if (!request || request.guildOwnerUid !== currentUser.uid) {
+          alert("You are not allowed to manage this request.");
+          return;
+        }
+
+        if (request.status !== "pending") {
+          alert("This request has already been processed.");
+          return;
+        }
+
+        if (newStatus === "rejected") {
+          await updateDoc(requestRef, {
+            status: "rejected"
+          });
+
+          alert("Request rejected.");
+          return;
+        }
+
+        await runTransaction(db, async transaction => {
+          const freshRequest = await transaction.get(requestRef);
+
+          if (!freshRequest.exists() || freshRequest.data().status !== "pending") {
+            throw new Error("This request has already been processed.");
+          }
+
+          const guildRef = doc(db, "guilds", request.guildId);
+          const guildSnapshot = await transaction.get(guildRef);
+
+          if (!guildSnapshot.exists()) {
+            throw new Error("Guild no longer exists.");
+          }
+
+          const guild = guildSnapshot.data();
+
+          if (guild.ownerUid !== currentUser.uid) {
+            throw new Error("You do not own this guild.");
+          }
+
+          if (Number(guild.totalPlayers) >= Number(guild.maxPlayers)) {
+            throw new Error("Guild is already full.");
+          }
+
+          transaction.update(guildRef, {
+            totalPlayers: Number(guild.totalPlayers) + 1
+          });
+
+          transaction.update(requestRef, {
+            status: "accepted"
+          });
+        });
+
+        alert("Player accepted! Guild player count updated.");
+      } catch (error) {
+        alert(friendlyError(error));
+      }
+    }
+
+    async function deleteGuild(guildId) {
+      if (!currentUser) return;
+
+      const guild = guilds.find(item => item.id === guildId);
+
+      if (!guild || guild.ownerUid !== currentUser.uid) {
+        alert("You cannot delete this guild.");
+        return;
+      }
+
+      if (!confirm("Are you sure you want to delete this guild?")) return;
+
+      try {
+        await deleteDoc(doc(db, "guilds", guildId));
+        alert("Guild deleted.");
+      } catch (error) {
+        alert(friendlyError(error));
+      }
+    }
+
+    $("authButton").addEventListener("click", () => openAuth("login"));
+    $("logoutButton").addEventListener("click", logout);
+    $("registerButton").addEventListener("click", openGuildForm);
+    $("authSubmit").addEventListener("click", submitAuth);
+    $("forgotPassword").addEventListener("click", resetPassword);
+    $("saveGuildButton").addEventListener("click", saveGuild);
+
+    $("switchAuth").addEventListener("click", () => {
+      openAuth(authMode === "login" ? "signup" : "login");
+    });
+
+    $("searchInput").addEventListener("input", renderGuilds);
+
+    document.querySelectorAll("[data-close]").forEach(button => {
+      button.addEventListener("click", () => hideModal(button.dataset.close));
+    });
+
+    document.querySelectorAll(".modal").forEach(modal => {
+      modal.addEventListener("click", event => {
+        if (event.target === modal) hideModal(modal.id);
+      });
+    });
+
+    $("guildList").addEventListener("click", event => {
+      const joinButton = event.target.closest("[data-join]");
+      const deleteButton = event.target.closest("[data-delete]");
+
+      if (joinButton) sendJoinRequest(joinButton.dataset.join);
+      if (deleteButton) deleteGuild(deleteButton.dataset.delete);
+    });
+
+    $("leaderRequestsList").addEventListener("click", event => {
+      const acceptButton = event.target.closest("[data-accept]");
+      const rejectButton = event.target.closest("[data-reject]");
+
+      if (acceptButton) {
+        changeRequestStatus(acceptButton.dataset.accept, "accepted");
+      }
+
+      if (rejectButton) {
+        changeRequestStatus(rejectButton.dataset.reject, "rejected");
+      }
+    });
+
+    onAuthStateChanged(auth, user => {
+      currentUser = user;
+
+      if (user) {
+        $("authButton").classList.add("hidden");
+        $("logoutButton").classList.remove("hidden");
+        $("userLabel").classList.remove("hidden");
+        $("userLabel").textContent = user.displayName || "Player";
+
+        startUserListeners(user);
+      } else {
+        $("authButton").classList.remove("hidden");
+        $("logoutButton").classList.add("hidden");
+        $("userLabel").classList.add("hidden");
+
+        stopUserListeners();
+      }
+
+      renderGuilds();
+    });
+
+    startGuildListener();
+  </script>
+
+</body>
+</html>
